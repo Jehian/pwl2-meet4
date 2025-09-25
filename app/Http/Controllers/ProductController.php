@@ -46,7 +46,7 @@ class ProductController extends Controller
         $data['categories'] = $product->get_category_product()->get();
 
         $supplier = new Supplier;
-        $data['suppliers'] = $supplier->all();
+        $data['suppliers'] = $supplier->get_supplier()->get();
 
         return view('products.create', compact('data'));
     }
@@ -64,7 +64,7 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'image'                 => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'title'                 => 'required|min:5',
-            'supplier_id'           => 'required|integer',
+            'supplier'              => 'required|integer',
             'product_category_id'   => 'required|integer',
             'description'           => 'required|min:10',
             'price'                 => 'required|numeric',

@@ -30,7 +30,7 @@ class Product extends Model
         return self::create([
             'image'                => $image->hashName(),
             'title'                => $request->title,
-            'supplier_id'          => $request->supplier_id,
+            'supplier_id'          => $request->supplier,
             'product_category_id'  => $request->product_category_id,
             'description'          => $request->description,
             'price'                => $request->price,
