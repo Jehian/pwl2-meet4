@@ -39,17 +39,17 @@
                                         <img src="{{ asset('/storage/images/' . $product->image) }}" class="rounded" style="width: 150px">
                                     </td>
                                     <td>{{ $product->title }}</td>
-                                    <td>{{ $product->supplier_name}}</td>
-                                    <td>{{ $product->product_category_name }}</td>
+                                    <td>{{ $product->supplier_name ?? '-'}}</td>
+                                    <td>{{ $product->product_category_name ?? '-'}}</td>
                                     <td>{{ "Rp " . number_format($product->price,2,',','.') }}</td>
                                     <td>{{ $product->stock }}</td>
-                                    <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('products.destroy', $product->id) }}" method="POST">
-                                            <a href="{{ route('products.show', $product->id) }}" class="btn btn-sm btn-dark">SHOW</a>
-                                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                   <td class="text-center">
+                                        <form id="hapus-form-{{ $product->id }}" action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                            <a href="{{ route('products.show', $product->id) }}" class="btn btn-sm btn-dark">SHOW</a>
+                                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete({{ $product->id }}, '{{ $product->title }}')">HAPUS</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -71,7 +71,24 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    // message with sweetalert
+    function confirmDelete(id, title) {
+        Swal.fire({
+            title: 'Yakin hapus data ' + title + '?',
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('hapus-form-' + id).submit();
+            }
+        })
+    }
+
+    // pesan success & error
     @if(session('success'))
         Swal.fire({
             icon: "success",
@@ -89,8 +106,8 @@
             timer: 2000
         });
     @endif
-
 </script>
+
 
 </body>
 </html>
