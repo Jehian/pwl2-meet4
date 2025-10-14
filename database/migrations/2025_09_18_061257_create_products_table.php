@@ -35,6 +35,7 @@ return new class extends Migration
             $table->string('pic_supplier');
             $table->timestamps();
         });
+        
     }
 
     /**
