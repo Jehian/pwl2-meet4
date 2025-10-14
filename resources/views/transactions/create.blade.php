@@ -79,6 +79,22 @@
             margin-bottom: 10px;
             border: 1px solid #dee2e6;
         }
+
+        /* === FOOTER === */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0d1b2a;
+            color: #f8f9fa;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: 500;
+            border-top: 2px solid #205fb3;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
     </style>
 
 </head>
@@ -153,6 +169,9 @@
                 </div>
             </div>
         </div>
+                <footer>
+            Dashboard CRUD Project - Benny, Jason, Jonathan, Anas
+        </footer>
     </div>
 
     <!-- Script -->
