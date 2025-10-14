@@ -69,4 +69,15 @@ class Product extends Model
             return "tidak ada data yang diupdate";
         }
     }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category_product::class, 'product_category_id');
+    }
+    
 }
