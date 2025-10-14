@@ -33,6 +33,22 @@
             background-color: #1e88e5;
             color: #fff;
         }
+
+        /* === FOOTER === */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0d1b2a;
+            color: #f8f9fa;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: 500;
+            border-top: 2px solid #205fb3;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
@@ -92,6 +108,9 @@
             </table>
         </div>
     </div>
+            <footer>
+            Dashboard CRUD Project - Benny, Jason, Jonathan, Anas
+        </footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
