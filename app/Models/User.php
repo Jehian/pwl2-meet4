@@ -45,4 +45,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function get_user(){
+        $sql = $this->select("*");
+
+        return $sql;
+    }
 }
