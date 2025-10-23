@@ -51,12 +51,41 @@
             background-color: #205fb3;
             transform: translateX(5px);
         }
+        
+        /* ✅ CSS Tambahan untuk Tombol Logout */
+        .sidebar .btn-danger {
+            padding: 12px 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sidebar .btn-danger:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+            transform: translateX(5px);
+        }
 
-        /* === MAIN CONTENT === */
+
+        /* === MAIN CONTENT (SUDAH DIPERBAIKI) === */
         .main-content {
             flex: 1;
-            padding: 40px;
+            /* padding: 40px; <-- Dihapus */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
+
+        /* Class baru untuk wrapper konten */
+        .content-wrapper {
+            padding: 40px; /* Padding dipindahkan ke sini */
+        }
+
 
         .card {
             background-color: #ffffff;
@@ -85,93 +114,100 @@
             vertical-align: middle;
         }
 
-        /* === FOOTER === */
+        /* === FOOTER (SUDAH DIPERBAIKI) === */
         footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            /* Properti fixed dihapus */
             background-color: #0d1b2a;
             color: #f8f9fa;
             text-align: center;
-            padding: 15px 0;
+            padding: 15px 40px; /* Padding diubah */
             font-weight: 500;
             border-top: 2px solid #205fb3;
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
-            z-index: 1000;
         }
     </style>
 </head>
 <body>
 
-    <!-- ✅ SIDEBAR -->
     <div class="sidebar">
-        <h3>Dashboard</h3>
-        <a href="{{ route('suppliers.index') }}" class="active">Supplier</a>
-        <a href="{{ route('transactions.index') }}">Transaksi</a>
-        <a href="{{ route('products.index') }}">Product</a>
-        <a href="{{ route('categories.index') }}">Category Products</a>
+        <div>
+            <h3>Dashboard</h3>
+            <a href="{{ route('suppliers.index') }}" class="active">Supplier</a>
+            <a href="{{ route('transactions.index') }}">Transaksi</a>
+            <a href="{{ route('products.index') }}">Product</a>
+            <a href="{{ route('categories.index') }}">Category Products</a>
+        </div>
+        
+        <form action="{{ route('logout') }}" method="POST" class="mt-auto w-100">
+            @csrf
+            <button type="submit" class="btn btn-danger w-100">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right me-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2.a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                </svg>
+                Logout
+            </button>
+        </form>
     </div>
 
-    <!-- ✅ MAIN CONTENT -->
     <div class="main-content">
-        <h2 class="text-center my-4">Dashboard Supplier</h2>
-        <hr>
+        
+        <div class="content-wrapper">
+            <h2 class="text-center my-4">Dashboard Supplier</h2>
+            <hr>
 
-        <div class="card border-0 shadow-sm rounded p-3">
-            <div class="card-body">
-                <a href="{{ route('suppliers.create') }}" class="btn btn-md btn-success mb-3">+ ADD SUPPLIER</a>
+            <div class="card border-0 shadow-sm rounded p-3">
+                <div class="card-body">
+                    <a href="{{ route('suppliers.create') }}" class="btn btn-md btn-success mb-3">+ ADD SUPPLIER</a>
 
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Supplier Name</th>
-                                <th>PIC Supplier</th>
-                                <th style="width: 20%">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($suppliers as $supplier)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $supplier->supplier_name }}</td>
-                                <td>{{ $supplier->pic_supplier }}</td>
-                                <td>
-                                    <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST" class="d-inline delete-form">
-                                        <a href="{{ route('suppliers.show', $supplier->id) }}" class="btn btn-sm btn-secondary">SHOW</a>
-                                        <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-sm btn-primary">EDIT</a>
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" id="btn-delete" data-name="{{ $supplier->supplier_name }}">
-                                            HAPUS
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="6" class="text-center text-danger fw-bold py-3">
-                                    Data Supplier belum tersedia.
-                                </td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Supplier Name</th>
+                                    <th>PIC Supplier</th>
+                                    <th style="width: 20%">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($suppliers as $supplier)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $supplier->supplier_name }}</td>
+                                    <td>{{ $supplier->pic_supplier }}</td>
+                                    <td>
+                                        <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST" class="d-inline delete-form">
+                                            <a href="{{ route('suppliers.show', $supplier->id) }}" class="btn btn-sm btn-secondary">SHOW</a>
+                                            <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" id="btn-delete" data-name="{{ $supplier->supplier_name }}">
+                                                HAPUS
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-center text-danger fw-bold py-3">
+                                        Data Supplier belum tersedia.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
 
-                <div class="d-flex justify-content-center mt-3">
-                    {{ $suppliers->links() }}
+                    <div class="d-flex justify-content-center mt-3">
+                        {{ $suppliers->links() }}
+                    </div>
                 </div>
             </div>
-        </div>
-                <footer>
+        </div> <footer>
             Dashboard CRUD Project - Benny, Jason, Jonathan, Anas
         </footer>
     </div>
 
-    <!-- ✅ SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
