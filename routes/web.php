@@ -26,6 +26,7 @@ Route::get('/register', [AuthController::class, 'registerForm'])->name('register
 Route::post('/register', [AuthController::class, 'register'])->name('register.process');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/send-email/{to}/{id}', [\App\Http\Controllers\TransactionController::class, 'sendEmail']);
 
 // === ROUTE YANG DILINDUNGI LOGIN (AUTH MIDDLEWARE) ===
 Route::middleware(['auth'])->group(function () {

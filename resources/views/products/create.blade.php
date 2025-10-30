@@ -161,7 +161,7 @@
                                 </div>
                             </div>
 
-                            <button type="sumbit" class="btn btn-md btn-primary me-3">SAVE</button>
+                            <button type="submit" class="btn btn-md btn-primary me-3">SAVE</button>
                             <button type="button" id="resetBtn" onclick="resetForm()" class="btn btn-md btn-warning">RESET</button>
                             
                         </form>
@@ -177,7 +177,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        CREDITOR.replace( 'description' );
+        CKEDITOR.replace( 'description' );
 
         function resetForm() {
             document.getElementById("productForm").reset(); // Mereset semua nilai dalam form
