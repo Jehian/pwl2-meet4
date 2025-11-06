@@ -197,4 +197,43 @@ class ProductController extends Controller
         //redirect to index
         return redirect()->route('products.index')->with(['success' => 'Data Berhasil  dihapus']);
     }
+
+    // ==============================
+    // BAGIAN API
+    // ==============================
+
+    /**
+     * API: Get all products (JSON)
+     */
+    public function apiIndex()
+    {
+        $product = new Product;
+        $products = $product->get_product()->latest()->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ]);
+    }
+
+    /**
+     * API: Get single product by ID (JSON)
+     */
+    public function apiShow($id)
+    {
+        $product = new Product;
+        $productData = $product->get_product()->where("products.id", $id)->first();
+
+        if (!$productData) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Product not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $productData
+        ]);
+    }
 }

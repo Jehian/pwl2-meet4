@@ -9,7 +9,7 @@ use App\Http\Controllers\AuthController;
 
 // === Redirect Route ke halaman Login ===
 Route::get('/', function () {
-    return view('login');
+    return view('auth.login');
 });
 
 // route resource
